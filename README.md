@@ -20,17 +20,15 @@ Currently distance/flags/signal_strength is not decoded (left as 4 byte int).
 
 ## Dependencies 
 
-xv11lidar-arduino uses modified [Arduino-PID-Library](https://github.com/br3ttb/Arduino-PID-Library/).
+xv11lidar-arduino uses modified [Arduino-PID-Library](https://github.com/bmegli/Arduino-PID-Library.git).
 
 Modification uses float instead of double implementation of PID library.
 
-TO DO - add modified library on github (I am using simple `#define double float`)
-
 ## Installation
 
-Copy:
+Copy or clone:
 - `xv11lidar-arduino` directory to your sketchbook `libraries` directory
-- float Arduino-PID-Library implementation to your sketchbook `libraries` directory
+- modified [Arduino-PID-Library](https://github.com/bmegli/Arduino-PID-Library.git) to your sketchbook `libraries` directory
 
 ## Testing
 

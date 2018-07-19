@@ -11,12 +11,9 @@ Library needs:
 ## State
 
 Work in progress
+
 - motor PID works
 - decoding packets works
-
-Currently distance/flags/signal_strength is not decoded (left as 4 byte int).
-
-(library used for motor control, precise timestamping and data passed to higher controller).
 
 ## Dependencies 
 

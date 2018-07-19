@@ -11,7 +11,8 @@
 
 #include "xv11lidar.h"
 
-enum {StartByte = 0xFA, OffsetIndex=1, OffsetSpeed=2, OffsetReadings=4, OffsetCRC = 20, PacketWithoutCRCBytes=20};
+enum {StartByte = 0xFA, OffsetIndex=1, OffsetSpeed=2, OffsetReadings=4,
+ OffsetCRC = 20, PacketWithoutCRCBytes=20, ReadingSize=4, DistanceSize=2};
 
 XV11Lidar::XV11Lidar(HardwareSerial &serial, int pwm_pin):
  m_serial(serial),
@@ -66,12 +67,12 @@ bool XV11Lidar::processAvailable(XV11Packet *packet)
 
 			uint16_t crc_calc = checksum(m_packet);
 			uint16_t crc_rcv = decode_u16(m_packet+OffsetCRC);
-	
+
 			if(crc_calc == crc_rcv)
 			{
 				decodePacket(m_packet, packet);
-				m_motor_actual_rpm=(float)packet->m_speed64 * SpeedMultiplier;
-				packet->m_timestamp_us=m_packet_timestamp_us;
+				m_motor_actual_rpm=(float)packet->speed64 * SpeedMultiplier;
+				packet->timestamp_us=m_packet_timestamp_us;
 								
 				return true;
 			}
@@ -83,9 +84,13 @@ bool XV11Lidar::processAvailable(XV11Packet *packet)
 
 void XV11Lidar::decodePacket(const uint8_t *data, XV11Packet *packet) const
 {
-	packet->m_angle_quad = data[OffsetIndex] - 0xA0;
-	packet->m_speed64 = decode_u16(data + OffsetSpeed);
-	memcpy(&packet->m_readings, data + OffsetReadings, sizeof(packet->m_readings));
+	packet->angle_quad = data[OffsetIndex] - 0xA0;
+	packet->speed64 = decode_u16(data + OffsetSpeed);
+	for(int i=0;i<4;++i)
+	{
+		packet->distances[i] = decode_u16(data+OffsetReadings+i*ReadingSize);
+		packet->signals[i] = decode_u16(data+OffsetReadings+i*ReadingSize+DistanceSize);
+	}
 }
 
 
@@ -103,13 +108,6 @@ uint16_t XV11Lidar::checksum(const uint8_t data[PacketBytes]) const
 	
 	uint32_t checksum=(chk32 & 0x7FFF) + (chk32 >> 15);
 	return checksum & 0x7FFF;
-}
-
-uint16_t XV11Lidar::decode_u16(const uint8_t *data) const
-{
-	uint16_t ret;
-	memcpy(&ret, data, sizeof(ret));
-	return ret;
 }
 
 bool XV11Lidar::applyMotorPID()

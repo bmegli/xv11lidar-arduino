@@ -17,15 +17,12 @@ Work in progress
 
 ## Dependencies 
 
-xv11lidar-arduino uses modified [Arduino-PID-Library](https://github.com/bmegli/Arduino-PID-Library.git).
-
-Modification uses float instead of double implementation of PID library.
+xv11lidar-arduino uses [Arduino-PID-Library](https://github.com/br3ttb/Arduino-PID-Library.git).
 
 ## Installation
 
-Copy or clone:
-- `xv11lidar-arduino` directory to your sketchbook `libraries` directory
-- modified [Arduino-PID-Library](https://github.com/bmegli/Arduino-PID-Library.git) to your sketchbook `libraries` directory
+- in Arduino IDE Sketch -> Include Library -> Manage Libraries... -> PID -> Install
+- copy or clone `xv11lidar-arduino` directory to your sketchbook `libraries` directory
 
 ## Testing
 

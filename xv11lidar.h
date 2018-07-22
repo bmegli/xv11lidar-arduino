@@ -17,7 +17,6 @@
 #include <stdint.h>
 #include <PID_v1.h> //uses modified PID library (float instead of double implementation)
 
-
 struct XV11Packet
 {	
 	uint32_t timestamp_us;//timestamp in microseconds
@@ -50,7 +49,7 @@ private:
 private:
 	/* Hardware */
 	HardwareSerial &m_serial;
-	int m_pwm_pin;
+	const int m_pwm_pin;
 	
 	/* Packet & Decoding */ 
 	State m_state;
@@ -60,9 +59,9 @@ private:
 	
 	/* Motor control */
 	PID m_motor_pid;
-	float m_motor_actual_rpm;
-	float m_motor_setpoint_rpm;
-	float m_motor_pwm;
+	double m_motor_actual_rpm;
+	double m_motor_setpoint_rpm;
+	double m_motor_pwm;
 };
 
 #endif

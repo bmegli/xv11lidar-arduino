@@ -1,19 +1,25 @@
 # xv11lidar-arduino
 
-Arduino/Teensy library for communication with XV11 lidar.
+Arduino/Teensy library for non-blocking communication with XV11 lidar.
 
 ## Hardware 
 
 Library needs:
-- XV11 lidar
+- XV11 lidar (hardware)
 - pwm motor controller 
+
+## Purpose
+
+- speed motor control
+- non-blocking communication
+- precise timestamps
 
 ## State
 
-Work in progress
-
-- motor PID works
-- decoding packets works
+Functional:
+- motor PID
+- decoding packets
+- precise timestamping on first packet byte
 
 ## Dependencies 
 
@@ -24,9 +30,9 @@ xv11lidar-arduino uses [Arduino-PID-Library](https://github.com/br3ttb/Arduino-P
 - in Arduino IDE Sketch -> Include Library -> Manage Libraries... -> PID -> Install
 - copy or clone `xv11lidar-arduino` directory to your sketchbook `libraries` directory
 
-## Testing
-
 ## Using
+
+For real use see [cave-crawler-mcu](https://github.com/bmegli/cave-crawler-mcu/blob/master/cave-crawler-mcu.ino#L72)
 
 ```C++
 #include <xv11lidar.h>
@@ -56,7 +62,6 @@ void loop()
   }
 }
 ```
-
 
 ## License
 
